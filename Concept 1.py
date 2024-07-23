@@ -1,39 +1,60 @@
 from tkinter import *
+import random
 
-
-class window_one:
-    def __init__(self):
+class WindowOne:
+    def __init__(self, root):
+        self.root = root
+        self.root.geometry("400x400")
+        self.root.configure(bg="#90EE90")
+        self.root.title("Math For Kids")
        
         
-        root.geometry("300x400")
-        root.configure(bg="#90EE90")
+        self.create_widgets()
 
-        def exit():
-            root.destroy()
-      
-        
-        Play = Button(root, text="Play", command=play_window)
-        Play.pack(anchor=W, padx=10)
+    def create_widgets(self):
+        play_button = Button(self.root, text="Play", command=self.open_play_window, height = 10, width= 10)
+        play_button.pack()
 
-            
-        Exit = Button(root, text="Exit", command=exit) 
-        Exit.pack(anchor= W, padx=10)
+        exit_button = Button(self.root, text="Exit", command=self.root.destroy)
+        exit_button.pack(anchor=W, padx=10)
         
-        Instructions = Button(root, text="Instructions", command=window_one)
-        Instructions.pack(anchor= W, padx=10)
+        instructions_button = Button(self.root, text="Instructions", command=self.show_instructions)
+        instructions_button.pack(anchor=W, padx=10)
         
-        Leaderboard = Button(root, text="Leaderboard", command=window_one)
-        Leaderboard.pack(anchor= W, padx=10)
+        leaderboard_button = Button(self.root, text="Leaderboard", command=self.show_leaderboard)
+        leaderboard_button.pack(anchor=W, padx=10)
         
-        Username_Label = Label(root, text="Enter Username")
-        Username_Label.pack(anchor= W, padx=10)
-        Username_textbox = Entry(root)
-        Username_textbox.pack(anchor= W, padx=10)
+        username_label = Label(self.root, text="Enter Username")
+        username_label.pack(anchor=W, padx=10)
+        
+        self.username_textbox = Entry(self.root)
+        self.username_textbox.pack(anchor=W, padx=10)
 
-        Age_Label = Label(root, text="Enter Age")
-        Age_Label.pack(anchor= W, padx=10)
-        Age_textbox = Entry(root)
-        Age_textbox.pack(anchor= W, padx=10)
+        age_label = Label(self.root, text="Enter Age")
+        age_label.pack(anchor=W, padx=10)
+        
+        self.age_textbox = Entry(self.root)
+        self.age_textbox.pack(anchor=W, padx=10)
+
+    def open_play_window(self):
+        PlayWindow(self.root)
+
+    def show_instructions(self):
+        instructions = Toplevel(self.root)
+        instructions.title("Instructions")
+        instructions.geometry("400x300")
+        instructions.configure(bg="#90EE90")
+        instructions_label = Label(instructions, text="Instructions: Solve the math problems correctly!")
+        instructions_label.pack(pady=20)
+        
+    def show_leaderboard(self):
+        leaderboard = Toplevel(self.root)
+        leaderboard.title("Leaderboard")
+        leaderboard.geometry("400x300")
+        leaderboard.configure(bg="#90EE90")
+        leaderboard_label = Label(leaderboard, text="Leaderboard")
+        leaderboard_label.pack(pady=20)
+
 
 class PlayWindow:
     def __init__(self, parent):
@@ -44,6 +65,9 @@ class PlayWindow:
         self.num = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         
         self.create_widgets()
+
+
+
 
     def create_widgets(self):
         self.num1 = random.choice(self.num)
