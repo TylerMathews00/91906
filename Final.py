@@ -9,8 +9,8 @@ from tkinter import messagebox # Import Messagebox
 import random # Import Randomizer
 import os # Import os
 
-def validate_input(current_value): # Validate the input for negative values
-    if current_value == "" or current_value == "-" or current_value.isdigit() or (current_value[0] == '-' and current_value[1:].isdigit()):
+def validate_input(value): # Validate the input for negative values
+    if value == "" or value == "-" or value.isdigit() or (value[0] == '-' and value[1:].isdigit()):
         return True
     return False
 
@@ -24,76 +24,66 @@ class Window_one:  # Create the first window
         self.create_widgets()
 
     def create_widgets(self): # Function for widgets
-        play_button = Button(self.root, text="Play", command=self.open_play_window, height=3, width=15,
-                             font=('Arial', 15, 'bold'), fg="black") # Button to open the game window
-        play_button.grid(row=0, column=0, padx=20, pady=20, columnspan=2, sticky="nsew")
+        plays_button = Button(self.root, text="Play", command=self.open_play_window, height=3, width=15, # Commands to open the button 
+                             font=('Arial', 15, 'bold'), fg="black") # Buttons to open the game window
+        plays_button.grid(row=0, column=0, padx=20, pady=20, columnspan=2, sticky="nsew") # Play placements 
 
-        instructions_button = Button(self.root, text="Instructions", command=self.show_instructions,
-                                     height=3, width=10, fg="black") # Button to open the instructions window
-        instructions_button.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
+        instructions_button = Button(self.root, text="Instructions", command=self.show_instructions, # Commands the program open the instructions
+                                     height=3, width=10, fg="black") # Buttons to open the instructions window
+        instructions_button.grid(row=1, column=0, padx=20, pady=20, sticky="nsew") # The buttons grids rows 
 
-        leaderboard_button = Button(self.root, text="Leaderboard", command=self.show_leaderboard,
-                                    height=3, width=10, fg="black") # Button to open the leaderboard window 
-        leaderboard_button.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
+        leaderboards_button = Button(self.root, text="Leaderboard", command=self.show_leaderboard, # Commands the program to open the leaderboard
+                                    height=3, width=10, fg="black") # Buttons to open the leaderboard window 
+        leaderboards_button.grid(row=1, column=1, padx=20, pady=20, sticky="nsew") # Leaderboards placement on the window screen 
 
-        exit_button = Button(self.root, text="Exit", command=self.root.destroy, height=3, width=15,
-                              fg="SpringGreen4") # Button to exit the program
-        exit_button.grid(row=2, column=0, padx=20, pady=20, columnspan=2, sticky="nsew")
-
+        exits_button = Button(self.root, text="Exit", command=self.root.destroy, height=3, width=15, # Commands the program to exit the program
+                              fg="SpringGreen4") # Buttons to exit the program
+        exits_button.grid(row=2, column=0, padx=20, pady=20, columnspan=2, sticky="nsew") # Exit buttons placement 
         
-        self.image = PhotoImage(file="/Users/tyler/Library/CloudStorage/OneDrive-LynfieldCollege/3PAD/AS91906 and AS91907/Tyler Mathews - 3PAD 91906 91907/cartoon-math-word-with-math-symbols_1308-97111.png")
-        resized_image = self.image.subsample(3, 3)  # Make the image smaller
-
-        image_label = Label(self.root, image=resized_image, bg="#87CEEB")
-        image_label.image = resized_image  # Keep a reference to prevent garbage collection
-        image_label.grid(row=3, column=0, columnspan=2, pady=20)        
+        self.root.grid_columnconfigure(0, weight=1) # The Configurations of grids rows numbers 0
+        self.root.grid_columnconfigure(1, weight=1) # Configure the grids rows number 1
+        self.root.grid_rowconfigure(0, weight=1) # Grid rows number one
+        self.root.grid_rowconfigure(1, weight=1) # Grid rows number 2
+        self.root.grid_rowconfigure(2, weight=1) # Grid rows number 3
         
-        self.root.grid_columnconfigure(0, weight=1) # The grid rows 
-        self.root.grid_columnconfigure(1, weight=1)
-        self.root.grid_rowconfigure(0, weight=1)
-        self.root.grid_rowconfigure(1, weight=1)
-        self.root.grid_rowconfigure(2, weight=1)
-        self.root.grid_rowconfigure(3, weight=1)  
         
 
     def open_play_window(self): # Open the game window from play button
         game_window(self.root)
 
-    def show_instructions(self): # Instructions window
-        instructions = Toplevel(self.root) # Open the Instructions window
-        instructions.title("Instructions") # Title for window
-        instructions.geometry("400x500") # Change the geometry
-        instructions.configure(bg="#87CEEB") # Background colour to light blue
-        instructions_label = Label(instructions, text="Instructions: Solve math problems within the time limit.", font=("Arial", 12), bg="#87CEEB")
-        instructions_label.pack(pady=20) # Change label postion
+    def show_instructions(tk): # Instructions window
+        instructions = Toplevel(tk.root) # Open the Instructions window
+        instructions.title("Instructions Manual") # Title for window
+        instructions.geometry("400x400") # Change the geometry
+        instructions.configure(bg="#87CEEA") # Background colour to light blue
+        instructions_label = Label(instructions, text="Answer questions within a time limit press Play to begin",
+                                   font=("Arial", 12), bg="#87CEEA")
+        instructions_label.pack(pady=10) # Change label postion
 
-    def show_leaderboard(self): # Leaderboard window
-        self.leaderboard_window = Toplevel(self.root) # Open the window
-        self.leaderboard_window.title("Leaderboard") # Change the title of the window
-        self.leaderboard_window.geometry("400x600") # Change the geometry
-        self.leaderboard_window.configure(bg="#87CEEB") # Change background colour to light blue
+    def show_leaderboard(self): # Leaderboards windows
+        self.leaderboard_window = Toplevel(self.root) # Open the windows
+        self.leaderboard_window.title("Leaderboard of all scores") # Change the title of the windows
+        self.leaderboard_window.geometry("400x600") # Change the geometrys
+        self.leaderboard_window.configure(bg = "#87CEEB") # Change background colour to light blues
 
-        leaderboard_label = Label(self.leaderboard_window, text="Leaderboard", font=("Arial", 16), bg="#87CEEB")
-        leaderboard_label.pack(pady=20)
+        leaderboard_label = Label(self.leaderboard_window, text="Leaderboard", font=("Arial", 16), bg = "#87CEEA") # Labels the leaderboard
+        leaderboard_label.pack(pady = 10) # Placement of leaderboards label
 
         try:
-            with open("score.txt", "r") as file:
+            with open("score.txt", "r") as file: # Open file for data
                 scores = file.read()
         except FileNotFoundError:
             scores = "No scores available."
 
-        self.leaderboard_label = Label(self.leaderboard_window, text=scores, font=("Arial", 12), bg="#87CEEB")
-        self.leaderboard_label.pack(pady=10)
-
-        clear_button = Button(self.leaderboard_window, text="Clear Leaderboard", command=self.clear_leaderboard, bg="#FF4500", fg="SpringGreen4") # Create button to clear the leaderboard
+        clear_button = Button(self.leaderboard_window, text="Clear Leaderboard", command=self.clear_leaderboard, bg="#FF4500", fg="SpringGreen4") # Creates button to clear the leaderboards
         clear_button.pack(pady=10) # Set postion
 
-    def clear_leaderboard(self): # Function to clear leaderboard
-        with open("score.txt", "w") as file:
-            file.write("")
+    def clear_leaderboard(self): # Function to clear leaderboards
+        with open("score.txt", "w") as file: # Open file for datas
+            file.write("") 
 
-        self.leaderboard_label.config(text="No scores available.")
-        messagebox.showinfo("Leaderboard Cleared", "All scores have been cleared!")
+        self.leaderboard_label.config(text="no scores available") # Shows the user that no scores are available
+        messagebox.showinfo("leaderboard cleared", "Every score have been cleared") # Give message to the user
 
 
 class game_window: # Game window
@@ -103,8 +93,8 @@ class game_window: # Game window
         self.play_window.geometry("700x400") # Change the geometry
         self.play_window.configure(bg="#FFDEAD") # Change the background colour to orange
 
-        self.num = [1, 2, 3, 4, 5, 6, 7, 8, 9] # List the numbers
-        self.operations = ['+', '-', '*', '/'] # Random operations
+        self.num = [1, 2, 3, 4, 5, 6, 7, 8, 9 , 0] # List all possible numbers the user may encounter
+        self.operations = ['+', '-', '*', '/'] # Random signs for the user to come across
         self.question_count = 0 # Starting question count
         self.max_questions = 10 # Question limit
         self.score = 0  # Start score here
@@ -115,12 +105,12 @@ class game_window: # Game window
     def create_widgets(self): # Widgets for game window
         self.generate_question() # generate questions
 
-        self.question_label = Label(self.play_window, text=self.question_text, font=("Arial", 24), bg="#FFDEAD") # Question label
-        self.question_label.grid(row=0, column=0, columnspan=3, pady=20)
+        self.question_label = Label(self.play_window, text=self.question_text, font=("Arial", 24), bg="#FFDEAD") # Questions label to support the user 
+        self.question_label.grid(row=0, column=0, columnspan=3, pady=20) # Place the question label in a nice spot
 
         vcmd = (self.play_window.register(validate_input), '%P') # Validates input
-        self.answer_entry = Entry(self.play_window, font=("Arial", 18), validate="key", validatecommand=vcmd) # Create the answer entry box
-        self.answer_entry.grid(row=1, column=1, padx=10, pady=20)
+        self.answer_entry = Entry(self.play_window, font=("Arial", 18), validate="key", validatecommand=vcmd) # Create the answer entry box for the user to add an input entry
+        self.answer_entry.grid(row=1, column=1, padx=10, pady=20) # Place the answer entry in the program which is reasonable
 
         submit_button = Button(self.play_window, text="Submit", command=self.submit_answer, height=2, width=4, 
                                 fg="hot pink") # Create the submit button
@@ -243,12 +233,12 @@ class registration_window: # Registration window
             return
 
         with open("score.txt", "a") as file: # Save the information to a data file
-            file.write(f"Username: {username_info}\n")
-            file.write(f"Age: {age_info}\n")
-            file.write(f"Score: {score_info}\n")
+            file.write(f"Username: {username_info}\n") # Save the informations for the users name
+            file.write(f"Age: {age_info}\n") # Save informations of the age of the user
+            file.write(f"Score: {score_info}\n") # Save the score of users information
             file.write("-" * 20 + "\n")
 
-        messagebox.showinfo("Success", f"Data saved successfully!\nUser: {username_info}, Age: {age_info}, Score: {score_info}") # Message box telling the user their details
+        messagebox.showinfo("Success", f"data saved successfully\nUser: {username_info}, Age: {age_info}, Score: {score_info}") # Message box telling the user their details
         self.registration_window.destroy() # Destroys the registration window
 
 root = Tk()
